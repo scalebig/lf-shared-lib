@@ -23,5 +23,6 @@ let self = module.exports = {
   base64: require('./lib/base64'),
   jwt: require('./lib/jwt'),
   decodeURIEx: require('./lib/decodeURIEx'),
-  _: require('./lib/lodash-mixins')
+  _: require('./lib/lodash-mixins'),
+  SigFigures: require('./lib/sigfig-parser')
 }
