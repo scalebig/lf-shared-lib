@@ -1,5 +1,6 @@
 
 let self = module.exports = {
+  ApiError: require('./lib/api-error'),
   lfMath: require('./lib/lf-math'),
   lfNum: require('./lib/lf-num'),
   time: require('./lib/time'),
@@ -24,5 +25,6 @@ let self = module.exports = {
   jwt: require('./lib/jwt'),
   decodeURIEx: require('./lib/decodeURIEx'),
   _: require('./lib/lodash-mixins'),
-  SigFigures: require('./lib/sigfig-parse')
+  user: require('./lib/user'),
+  logSafeMsg: require('./lib/log-safe-msg')
 }

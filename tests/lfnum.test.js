@@ -404,11 +404,6 @@ describe('lfNum test suite', () => {
       .toEqual(true)
   })
 
-  test('HP - sigFigCount() float const with 0.2', () => {
-    expect(lfNum(0.2).isSigFigCount(1))
-      .toEqual(true)
-  })
-
   test('HP - sigFigCount() string const with "0.2g"', () => {
     expect(lfNum('0.2g').isSigFigCount(1))
       .toEqual(true)
@@ -436,6 +431,10 @@ describe('lfNum test suite', () => {
 
   test('HP - sigFigCount() string const with 0.50E2', () => {
     expect(lfNum('0.50E2').isSigFigCount(2))
+      .toEqual(true)
+  })
+  test('HP - sigFigCount() string const with 4.52 cm^2', () => {
+    expect(lfNum('4.52 cm^2').isSigFigCount(3))
       .toEqual(true)
   })
   test('A value of 0 should return as 0 sig figs', () => {
@@ -522,14 +521,6 @@ describe('lfNum test suite', () => {
     expect(lfNum('1.23E-3').isSigFigCount(3))
       .toEqual(true)
   })
-  test('A value of 0.12345678 should return with 5 sig figs as 0.12345', () => {
-    expect(lfNum('0.12345678').toSigFigCount(5) === '0.12345')
-      .toEqual(true)
-  })
-  test('A value of 12345678 should return with 5 sig figs as 12345000', () => {
-    expect(lfNum('12345678').toSigFigCount(5) === '12345000')
-      .toEqual(true)
-  })
   test('A value of 0.00123 should return unchanged', () => {
     expect(lfNum('0.00123').toSigFigCount(5) === '0.00123')
       .toEqual(true)
@@ -538,67 +529,59 @@ describe('lfNum test suite', () => {
     expect(lfNum('12000').toSigFigCount(5) === '12000')
       .toEqual(true)
   })
-  test('A value of 100.0089898998 should return with 5 sig figs as 100.00', () => {
-    expect(lfNum('100.0089898998').toSigFigCount(5) === '100.00')
-      .toEqual(true)
-  })
   test('A value of -12000 should return unchanged', () => {
     expect(lfNum('-12000').toSigFigCount(5) === '-12000')
       .toEqual(true)
   })
-  test('A value of 0.0000000001 should return unchanged', () => {
-    expect(lfNum('0.0000000001').toSigFigCount(5) === '0.0000000001')
-      .toEqual(true)
-  })
   test('A value of 0.12345678 should return with 5 rounded sig figs as 0.12346', () => {
-    expect(lfNum('0.12345678').toSigFigCount(5, true) === '0.12346')
+    expect(lfNum('0.12345678').toSigFigCount(5) === '0.12346')
       .toEqual(true)
   })
-  test('A value of 12345678 should return with 5 rounded sig figs as 12346000', () => {
-    expect(lfNum('12345678').toSigFigCount(5, true) === '12346000')
+  test('A value of 1234567 should return with 5 rounded sig figs as 1234600', () => {
+    expect(lfNum('1234567').toSigFigCount(5) === '1234600')
       .toEqual(true)
   })
   test('A value of 0.00123 should return unchanged even with round on', () => {
-    expect(lfNum('0.00123').toSigFigCount(5, true)).toEqual('0.00123')
+    expect(lfNum('0.00123').toSigFigCount(5)).toEqual('0.00123')
   })
   test('A value of 12000 should return unchanged, even with round on', () => {
-    expect(lfNum('12000').toSigFigCount(5, true) === '12000')
+    expect(lfNum('12000').toSigFigCount(5) === '12000')
       .toEqual(true)
   })
   test('A value of 100.0089898998 should return with 5 sig figs as 100.01', () => {
-    expect(lfNum('100.0089898998').toSigFigCount(5, true) === '100.01')
+    expect(lfNum('100.0089898998').toSigFigCount(5) === '100.01')
       .toEqual(true)
   })
   test('A value of -12000 should return unchanged with round on', () => {
-    expect(lfNum('-12000').toSigFigCount(5, true) === '-12000')
+    expect(lfNum('-12000').toSigFigCount(5) === '-12000')
       .toEqual(true)
   })
-  test('A value of 0.0000000001 should return unchanged', () => {
-    expect(lfNum('0.0000000001').toSigFigCount(5, true) === '0.0000000001')
+  test('A value of 0.000001 should return unchanged', () => {
+    expect(lfNum('0.000001').toSigFigCount(5) === '0.000001')
       .toEqual(true)
   })
   test('A value of 0.75460 should return with 2 sig figs as 0.75', () => {
-    expect(lfNum('0.75460').toSigFigCount(2, true) === '0.75')
+    expect(lfNum('0.75460').toSigFigCount(2) === '0.75')
       .toEqual(true)
   })
   test('A string value of 2.86318e-19 should return with 4 sig figs as 2.863e-19', () => {
-    expect(lfNum('2.86318e-19').toSigFigCount(4, true) === '2.863e-19')
+    expect(lfNum('2.86318e-19').toSigFigCount(4) === '2.863e-19')
       .toEqual(true)
   })
   test('A number value of 2.86318e-19 should return with 4 sig figs as 2.863e-19', () => {
-    expect(lfNum(2.86318e-19).toSigFigCount(4, true) === '2.863e-19')
+    expect(lfNum(2.86318e-19).toSigFigCount(4) === '2.863e-19')
       .toEqual(true)
   })
   test('A string value of 2.86x10-19 should return with 4 sig figs as 2.86e-19', () => {
-    expect(lfNum('2.86x10-19').toSigFigCount(4, true) === '2.86x10-19')
+    expect(lfNum('2.86x10-19').toSigFigCount(4) === '2.86e-19')
       .toEqual(true)
   })
   test('A number value of 2.86e-19 should return with 4 sig figs as 2.86e-19', () => {
-    expect(lfNum(2.86e-19).toSigFigCount(4, true) === '2.86e-19')
+    expect(lfNum(2.86e-19).toSigFigCount(4) === '2.86e-19')
       .toEqual(true)
   })
   test('A value of 8.75460e21 should return with 2 sig figs as 8.8e+21', () => {
-    expect(lfNum(8.75460e21).toSigFigCount(2, true) === '8.8e+21')
+    expect(lfNum(8.75460e21).toSigFigCount(2) === '8.8e+21')
       .toEqual(true)
   })
   test('lfNum.mul helper function should multiply 2 * 3 and return a new lfNum containing 6 (using isEq)', () => {
@@ -892,10 +875,10 @@ describe('lfNum test suite', () => {
   })
 
   test('HP - constructor returns a rawNum of null when passed a stringified object or array', () => {
-    expect(lfNum(JSON.stringify([{insert: 'text'}])).rawNum)
+    expect(lfNum(JSON.stringify([{insert: 'text'}])).num)
       .toEqual(null)
 
-    expect(lfNum(JSON.stringify({insert: 'text'})).rawNum)
+    expect(lfNum(JSON.stringify({insert: 'text'})).num)
       .toEqual(null)
   })
 
@@ -980,6 +963,83 @@ describe('lfNum test suite', () => {
     expect(lfNum(-10.6).isInTolerance(-10, 0.5, 1, true))
       .toEqual(false)
   })
+  test('HP - isInToleranceRange; expected: 10; entered 10.6; lowerMultiplier: 0.95; upperMultiplier: 1.05', () => {
+    expect(lfNum(10.6).isInToleranceRange(10, 0.95, 1.05))
+      .toEqual(false)
+  })
+  test('HP - isInToleranceRange; expected: 10; entered 10.6; lowerMultiplier: 0.95; upperMultiplier: 1.05', () => {
+    expect(lfNum(10.3).isInToleranceRange(10, 0.95, 1.05))
+      .toEqual(true)
+  })
+  test('HP - isInToleranceRange; expected: -10; entered -10.6; lowerMultiplier: 0.95; upperMultiplier: 1.05', () => {
+    expect(lfNum(-10.6).isInToleranceRange(-10, 0.95, 1.05))
+      .toEqual(false)
+  })
+  test('HP - isInToleranceRange; expected: -10; entered -10.3; lowerMultiplier: 0.95; upperMultiplier: 1.05', () => {
+    expect(lfNum(-10.3).isInToleranceRange(-10, 0.95, 1.05))
+      .toEqual(true)
+  })
+  test('HP - isInToleranceRange; expected: 0; entered 0; lowerMultiplier: 0.95; upperMultiplier: 1.05', () => {
+    expect(lfNum(0).isInToleranceRange(0, 0.95, 1.05))
+      .toEqual(true)
+  })
+  test('HP - isInToleranceRange; expected: 0; entered 0.25; lowerMultiplier: 0.95; upperMultiplier: 1.05', () => {
+    expect(lfNum(0.25).isInToleranceRange(0, 0.95, 1.05))
+      .toEqual(false)
+  })
+  test('HP - isInToleranceRange; expected: 0; entered -0.25; lowerMultiplier: 0.95; upperMultiplier: 1.05', () => {
+    expect(lfNum(-0.25).isInToleranceRange(0, 0.95, 1.05))
+      .toEqual(false)
+  })
+  test('HP - isInToleranceRange; expected: 5; entered 5; lowerMultiplier: 1; upperMultiplier: 1.5', () => {
+    expect(lfNum(5).isInToleranceRange(5, 1, 1.1))
+      .toEqual(true)
+  })
+  test('HP - isInToleranceRange; expected: 5; entered 5; lowerMultiplier: 0.9; upperMultiplier: 1', () => {
+    expect(lfNum(5).isInToleranceRange(5, 0.9, 1))
+      .toEqual(true)
+  })
+  test('HP - isInToleranceRange; expected: 1.543; entered 1.5; lowerMultiplier: 0.98; upperMultiplier: 1.02; sigfigs: 2; decimal:', () => {
+    expect(lfNum(1.5).isInToleranceRange(1.543, 0.98, 1.02, 2, ''))
+      .toEqual(true)
+  })
+  test('HP - isInToleranceRange; expected: 1.543; entered 1.6; lowerMultiplier: 0.98; upperMultiplier: 1.02; sigfigs: 2; decimal:', () => {
+    expect(lfNum(1.6).isInToleranceRange(1.543, 0.98, 1.02, 2, ''))
+      .toEqual(true)
+  })
+  test('HP - isInToleranceRange; expected: 1.543; entered 1.7; lowerMultiplier: 0.98; upperMultiplier: 1.02; sigfigs: 2; decimal:', () => {
+    expect(lfNum(1.7).isInToleranceRange(1.543, 0.98, 1.02, '2', ''))
+      .toEqual(false)
+  })
+  test('HP - isInToleranceRange; expected: 1.543; entered 1.5; lowerMultiplier: 0.98; upperMultiplier: 1.02; sigfigs: ; decimal:1', () => {
+    expect(lfNum(1.5).isInToleranceRange(1.543, 0.98, 1.02, 2, ''))
+      .toEqual(true)
+  })
+  test('HP - isInToleranceRange; expected: 1.543; entered 1.6; lowerMultiplier: 0.98; upperMultiplier: 1.02; sigfigs: ; decimal:1', () => {
+    expect(lfNum(1.6).isInToleranceRange(1.543, 0.98, 1.02, '', 1))
+      .toEqual(true)
+  })
+  test('HP - isInToleranceRange; expected: 1.543; entered 1.4; lowerMultiplier: 0.98; upperMultiplier: 1.02; sigfigs: ; decimal:1', () => {
+    expect(lfNum(1.4).isInToleranceRange(1.543, 0.98, 1.02, '', 1))
+      .toEqual(false)
+  })
+  test('HP - isInToleranceRange; expected: 1.543E-5; entered 1.5E-5; lowerMultiplier: 0.98; upperMultiplier: 1.02; sigfigs: 2; decimal:', () => {
+    expect(lfNum(1.5E-5).isInToleranceRange(1.543E-5, 0.98, 1.02, 2, ''))
+      .toEqual(true)
+  })
+  test('HP - isInToleranceRange; expected: 1.543E-5; entered 1.6E-5; lowerMultiplier: 0.98; upperMultiplier: 1.02; sigfigs: ; decimal:1', () => {
+    expect(lfNum(1.6E-5).isInToleranceRange(1.543E-5, 0.98, 1.02, '', 1))
+      .toEqual(false)
+  })
+  test('HP - isInToleranceRange; expected: 1.543E-5; entered 1.6E-5; lowerMultiplier: 0.98; upperMultiplier: 1.02; sigfigs: ; decimal:6', () => {
+    expect(lfNum(1.6E-5).isInToleranceRange(1.543E-5, 0.98, 1.02, '', '6'))
+      .toEqual(true)
+  })
+  test('HP - isInToleranceRange; expected: 234; entered 0xEA; lowerMultiplier: 0.98; upperMultiplier: 1.02; sigfigs: ; decimal:', () => {
+    expect(lfNum(0xEA).isInToleranceRange(234, 0.98, 1.02, '', ''))
+      .toEqual(true)
+  })
+
   test('A value of 1234 should be rounded to 123', () => {
     expect(lfNum('1234').roundLastDigit()).toEqual('123')
   })
